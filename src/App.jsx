@@ -11,7 +11,7 @@ function App() {
       contactsData[Math.floor(Math.random() * contactsData.length)];
 
     if (contacts.includes(randomContact)) {
-      handleAddContact;
+      handleAddContact();
     } else {
       setContacts([...contacts, randomContact]);
     }
@@ -51,7 +51,7 @@ function App() {
         <button onClick={handleSortByPopulartity}>Sort by Popularity</button>
         <button onClick={handleSortByName}>Sort by Name</button>
         <table>
-          <tbody>
+          <thead>
             <tr>
               <th>Picture</th>
               <th>Name</th>
@@ -60,7 +60,8 @@ function App() {
               <th>Won an Emmy</th>
               <th>Actions</th>
             </tr>
-
+          </thead>
+          <tbody>
             {contacts.map((contact) => {
               return (
                 <>
