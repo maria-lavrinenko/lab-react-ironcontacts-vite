@@ -1,12 +1,21 @@
 import "./App.css";
 import { useState } from "react";
 import contactsData from "./contacts.json";
+import Contact from "./components/contact";
 
 function App() {
   const [contacts, setContacts] = useState(contactsData.slice(0, 5));
   console.log(contacts);
 
   const handleAddContact = () => {
+    if (contacts.length === contactsData.length) return;
+
+    // const arrayOfIds = contacts.map(contact => contact.id)
+    // const unknownContacts = contactsData.filter(contact => !arrayOfIds.includes(contact.id)
+    // const randomContact = unknownContacts[Math.floor(Math.random() * unknownContacts.length)]
+    // setContacts([...contacts,randomContact])
+    // or :
+
     const randomContact =
       contactsData[Math.floor(Math.random() * contactsData.length)];
 
@@ -18,6 +27,9 @@ function App() {
   };
 
   const handleSortByName = () => {
+    // setContacts(contacts.toSorted((a,b) => a.name.localCompare(b.name, undefined, {sensivity : "base"})))
+    // or:
+
     const copy = [...contacts];
     copy.sort((contactA, contactB) => {
       return contactA.name.localeCompare(contactB.name, undefined, {
@@ -64,29 +76,11 @@ function App() {
           <tbody>
             {contacts.map((contact) => {
               return (
-                <>
-                  <tr className="card">
-                    <td key={contact.id}>
-                      <img
-                        src={contact.pictureUrl}
-                        alt="`${contact.name}'s photo"
-                      />
-                    </td>
-                    <td>{contact.name}</td>
-                    <td>{contact.popularity.toFixed(2)}</td>
-                    <td>{contact.wonOscar ? "🏆" : ""}</td>
-                    <td>{contact.wonEmmy ? "🌟" : ""}</td>
-                    <td>
-                      <button
-                        onClick={() => {
-                          handleDeleteContact(contact.id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </>
+                <Contact
+                  key={contact.id}
+                  contact={contact}
+                  handleDeleteContact={handleDeleteContact}
+                />
               );
             })}
           </tbody>
